@@ -10,5 +10,5 @@ jon_boring {
 
     -- exit door will be in the top-most wall
     -- position the cursor on that edge. No need to rotate.
-    movestep(512)
+    movestep(512,0)
 }
