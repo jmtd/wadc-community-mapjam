@@ -1,19 +1,6 @@
 #"basic.h"
 #"jon.h"
 
-doorway {
-    /*
-     * a boring, featureless doorway, to join rooms together.
-     * 64 deep so rooms start aligned to the 64x64 grid.
-     */
-    !doorway
-    movestep(0,192)
-    pushpop(
-      movestep(64,128) turnaround
-      box(0,128,160,64,128)
-    )
-    movestep(64,-192)
-}
 
 main {
 
@@ -47,3 +34,42 @@ main {
      doorway
 
 }
+doorway {
+    /*
+     * a boring, featureless doorway, to join rooms together.
+     * 64 deep so rooms start aligned to the 64x64 grid.
+     */
+    !doorway
+    movestep(0,192)
+    bigdoor(0,96,160)
+}
+
+bigdoor(f,c,l) {
+  !bigdoor
+  top("BIGDOOR1")
+  move(24)
+
+  linetype(1,0)
+
+  right(128)
+  movestep(0,-16) turnaround
+  straight(128)
+  unpegged
+  movestep(0,-16) rotright
+  linetype(0,0)
+  mid("DOORTRAK")
+  ceil("FLAT23")
+  room(f,f,l,16,128)
+  ^bigdoor
+
+  room(f,c,l,24,128)
+  move(16)
+  room(f,c,l,24,128)
+}
+room(f,c,l,x,y) {
+  movestep(x,y) turnaround
+  box(f,c,l,x,y)
+  movestep(0,y) turnaround
+}
+
+
