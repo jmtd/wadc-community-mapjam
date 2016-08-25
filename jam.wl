@@ -32,6 +32,8 @@ main {
 
      jon_boring
      doorway
+     jon_castle
+     doorway
 
 }
 doorway {
@@ -42,6 +44,7 @@ doorway {
     !doorway
     movestep(0,192)
     bigdoor(0,96,160)
+    movestep(0, -192)
 }
 
 bigdoor(f,c,l) {
