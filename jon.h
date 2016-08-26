@@ -3,6 +3,7 @@
  *
  * Jon's WadC mapjam room, first attempt
  */
+#"decoration.h"
 
 jon_boring {
     -- literally a box. boring!
@@ -20,10 +21,10 @@ jon_castle { _jon_castle(get("floor"), add(160, get("floor"))) }
 
 buttresses(f,c,count) {
     for(0, count,
-        box(add(f, 128), add(f,128), 160, 32, 16)
-        movestep(0,16)
+        box(add(f, 128), add(f,128), 160, 32, 8)
+        movestep(0,8)
         box(add(f, 128), c, 160, 32, 16)
-        movestep(64,-16)
+        movestep(64,-8)
     )
 }
 
@@ -31,8 +32,8 @@ _jon_castle(f,c) {
     !jon_castle
     unpegged
 
-    floor("RROCK19")
-    mid("STONE2")
+    floor("RROCK19") floor("MFLR8_1")
+    mid("STONE2") bot("STONE2") top("STONE2")
 
     -- extra door corridor
     pushpop(
@@ -43,28 +44,37 @@ _jon_castle(f,c) {
     ceil("F_SKY1")
 
     -- main space
-    movestep(32,32)
-    box(f, add(f, c), 160, 448, 448)
 
-    -- west and north wall
-    movestep(32,-32)
-    buttresses(f,c,6)
-    rotright movestep(32,32)
-    movestep(32,-32)
-    buttresses(f,c,6)
-    rotright
+    movestep(128,128)
+    quad(
+        left(96)   pushpop( movestep(-64,-24) buttresses(f,c,0) )
+        right(256)
+        rotright
+        pushpop(movestep(32,-24) buttresses(f,c,0))
+        straight(96)
+    )
+    rightsector(f,add(f, c), 160)
 
-    -- exit door wall
-    movestep(96,0)
-    buttresses(f,c,0)
-    movestep(224,0)
-    buttresses(f,c,0)
+    -- inset floor
+    pushpop(
+        floor("RROCK19")
+        movestep(32,0)
+        quad (step(32,32) straight(200) rotright)
+        innerrightsector(sub(f,16),c,160)
+    )
+    pushpop(movestep(128,128) burnttree thing)
 
-    -- entrance door wall
-    movestep(64,96) rotright
-    buttresses(f,c,0)
-    movestep(224,0)
-    buttresses(f,c,0)
+    -- west wall
+    pushpop(
+        movestep(48,-120)
+        buttresses(f,c,2)
+    )
+    -- north wall
+    pushpop(
+        move(376) rotright
+        move(48)
+        buttresses(f,c,2)
+    )
 
     unpegged
     ^jon_castle
